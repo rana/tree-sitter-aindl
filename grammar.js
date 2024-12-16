@@ -1,51 +1,37 @@
+// grammar.js
 module.exports = grammar({
   name: "aindl",
 
   rules: {
-    // Root
     source_file: ($) => repeat($._definition),
 
-    _definition: ($) => choice($.block, $.comment),
+    _definition: ($) => choice($.block),
 
-    // Block Structure
     block: ($) =>
       seq(
-        field("name", $.block_identifier),
-        field("left_brace", "{"),
-        repeat(choice($.property, $.block, $.comment)),
-        field("right_brace", "}"),
+        $.identifier,
+        "{",
+        optional(seq($.property, repeat(seq(",", $.property)), optional(","))),
+        "}",
       ),
 
-    block_identifier: ($) => /[A-Z][A-Z_0-9]*/,
+    identifier: ($) => /[A-Z][A-Z_0-9]*/,
 
-    // Properties
-    property: ($) =>
-      seq(field("key", $.property_key), ":", field("value", $.value)),
+    property: ($) => seq($.identifier, ":", $._value),
 
-    property_key: ($) => /[A-Z][A-Z_0-9]*/,
+    _value: ($) => choice($.string, $.multiline_string, $.number, $.array),
 
-    // Values
-    value: ($) => choice($.string, $.number, $.array, $.block),
+    string: ($) => /"[^"]*"/,
 
-    // Leaf Nodes
-    string: ($) =>
-      seq(
-        field("quote", '"'),
-        field("content", /[^"]*/),
-        field("end_quote", '"'),
-      ),
+    multiline_string: ($) => token(seq('"""', repeat(/[^"]/), '"""')),
 
     number: ($) => /\d+(\.\d+)?/,
 
-    // Array Structure
     array: ($) =>
       seq(
-        field("left_bracket", "["),
-        optional(seq($.value, repeat(seq(",", $.value)))),
-        field("right_bracket", "]"),
+        "[",
+        optional(seq($._value, repeat(seq(",", $._value)), optional(","))),
+        "]",
       ),
-
-    // Comments
-    comment: ($) => token(seq("//", /.*/)),
   },
 });

@@ -1,70 +1,64 @@
 ==================
-Simple block test
+Basic AINDL Test
 ==================
 
-TEST_BLOCK {
-  PROPERTY: "test"
+TEST {
+  SIMPLE: "hello",
+  NUMBER: 42
 }
 
 ---
 
 (source_file
   (block
-    (block_identifier)
+    (identifier)
     (property
-      (property_key)
-      (value
-        (string)))))
+      (identifier)
+      (string))
+    (property
+      (identifier)
+      (number))))
 
 ==================
-Multiple properties
+Multiline String Test
 ==================
 
-TEST_BLOCK {
-  STRING_PROP: "value"
-  NUMBER_PROP: 42
-  ARRAY_PROP: [1, 2, 3]
+TEST {
+  MULTI: """
+    hello
+    world
+  """
 }
 
 ---
 
 (source_file
   (block
-    (block_identifier)
+    (identifier)
     (property
-      (property_key)
-      (value
-        (string)))
-    (property
-      (property_key)
-      (value
-        (number)))
-    (property
-      (property_key)
-      (value
-        (array
-          (value (number))
-          (value (number))
-          (value (number)))))))
+      (identifier)
+      (multiline_string))))
 
 ==================
-Nested blocks
+Array Test
 ==================
 
-OUTER {
-  INNER {
-    PROP: "value"
-  }
+TEST {
+  ITEMS: [
+    "one",
+    2,
+    """three"""
+  ]
 }
 
 ---
 
 (source_file
   (block
-    (block_identifier)
-    (block
-      (block_identifier)
-      (property
-        (property_key)
-        (value
-          (string))))))
+    (identifier)
+    (property
+      (identifier)
+      (array
+        (string)
+        (number)
+        (multiline_string)))))

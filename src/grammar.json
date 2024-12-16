@@ -1,4 +1,5 @@
 {
+  "$schema": "https://tree-sitter.github.io/tree-sitter/assets/schemas/grammar.schema.json",
   "name": "aindl",
   "rules": {
     "source_file": {
@@ -14,10 +15,6 @@
         {
           "type": "SYMBOL",
           "name": "block"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "comment"
         }
       ]
     },
@@ -26,31 +23,56 @@
       "members": [
         {
           "type": "SYMBOL",
-          "name": "block_identifier"
+          "name": "identifier"
         },
         {
           "type": "STRING",
           "value": "{"
         },
         {
-          "type": "REPEAT",
-          "content": {
-            "type": "CHOICE",
-            "members": [
-              {
-                "type": "SYMBOL",
-                "name": "property"
-              },
-              {
-                "type": "SYMBOL",
-                "name": "block"
-              },
-              {
-                "type": "SYMBOL",
-                "name": "comment"
-              }
-            ]
-          }
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "SYMBOL",
+                  "name": "property"
+                },
+                {
+                  "type": "REPEAT",
+                  "content": {
+                    "type": "SEQ",
+                    "members": [
+                      {
+                        "type": "STRING",
+                        "value": ","
+                      },
+                      {
+                        "type": "SYMBOL",
+                        "name": "property"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "type": "CHOICE",
+                  "members": [
+                    {
+                      "type": "STRING",
+                      "value": ","
+                    },
+                    {
+                      "type": "BLANK"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
         },
         {
           "type": "STRING",
@@ -58,7 +80,7 @@
         }
       ]
     },
-    "block_identifier": {
+    "identifier": {
       "type": "PATTERN",
       "value": "[A-Z][A-Z_0-9]*"
     },
@@ -67,7 +89,7 @@
       "members": [
         {
           "type": "SYMBOL",
-          "name": "property_key"
+          "name": "identifier"
         },
         {
           "type": "STRING",
@@ -75,15 +97,11 @@
         },
         {
           "type": "SYMBOL",
-          "name": "value"
+          "name": "_value"
         }
       ]
     },
-    "property_key": {
-      "type": "PATTERN",
-      "value": "[A-Z][A-Z_0-9]*"
-    },
-    "value": {
+    "_value": {
       "type": "CHOICE",
       "members": [
         {
@@ -92,21 +110,44 @@
         },
         {
           "type": "SYMBOL",
+          "name": "multiline_string"
+        },
+        {
+          "type": "SYMBOL",
           "name": "number"
         },
         {
           "type": "SYMBOL",
           "name": "array"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "block"
         }
       ]
     },
     "string": {
       "type": "PATTERN",
       "value": "\"[^\"]*\""
+    },
+    "multiline_string": {
+      "type": "TOKEN",
+      "content": {
+        "type": "SEQ",
+        "members": [
+          {
+            "type": "STRING",
+            "value": "\"\"\""
+          },
+          {
+            "type": "REPEAT",
+            "content": {
+              "type": "PATTERN",
+              "value": "[^\"]"
+            }
+          },
+          {
+            "type": "STRING",
+            "value": "\"\"\""
+          }
+        ]
+      }
     },
     "number": {
       "type": "PATTERN",
@@ -127,7 +168,7 @@
               "members": [
                 {
                   "type": "SYMBOL",
-                  "name": "value"
+                  "name": "_value"
                 },
                 {
                   "type": "REPEAT",
@@ -140,10 +181,22 @@
                       },
                       {
                         "type": "SYMBOL",
-                        "name": "value"
+                        "name": "_value"
                       }
                     ]
                   }
+                },
+                {
+                  "type": "CHOICE",
+                  "members": [
+                    {
+                      "type": "STRING",
+                      "value": ","
+                    },
+                    {
+                      "type": "BLANK"
+                    }
+                  ]
                 }
               ]
             },
@@ -157,22 +210,6 @@
           "value": "]"
         }
       ]
-    },
-    "comment": {
-      "type": "TOKEN",
-      "content": {
-        "type": "SEQ",
-        "members": [
-          {
-            "type": "STRING",
-            "value": "//"
-          },
-          {
-            "type": "PATTERN",
-            "value": ".*"
-          }
-        ]
-      }
     }
   },
   "extras": [
@@ -187,4 +224,3 @@
   "inline": [],
   "supertypes": []
 }
-

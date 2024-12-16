@@ -7,12 +7,6 @@
     "build": "tree-sitter generate",
     "test": "tree-sitter test"
   },
-  "tree-sitter": [
-    {
-      "scope": "source.aindl",
-      "file-types": ["aindl"]
-    }
-  ],
   "devDependencies": {
     "tree-sitter-cli": "^0.20.8"
   }
