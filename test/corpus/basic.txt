@@ -1,0 +1,70 @@
+==================
+Simple block test
+==================
+
+TEST_BLOCK {
+  PROPERTY: "test"
+}
+
+---
+
+(source_file
+  (block
+    (block_identifier)
+    (property
+      (property_key)
+      (value
+        (string)))))
+
+==================
+Multiple properties
+==================
+
+TEST_BLOCK {
+  STRING_PROP: "value"
+  NUMBER_PROP: 42
+  ARRAY_PROP: [1, 2, 3]
+}
+
+---
+
+(source_file
+  (block
+    (block_identifier)
+    (property
+      (property_key)
+      (value
+        (string)))
+    (property
+      (property_key)
+      (value
+        (number)))
+    (property
+      (property_key)
+      (value
+        (array
+          (value (number))
+          (value (number))
+          (value (number)))))))
+
+==================
+Nested blocks
+==================
+
+OUTER {
+  INNER {
+    PROP: "value"
+  }
+}
+
+---
+
+(source_file
+  (block
+    (block_identifier)
+    (block
+      (block_identifier)
+      (property
+        (property_key)
+        (value
+          (string))))))
