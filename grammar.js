@@ -12,7 +12,7 @@ module.exports = grammar({
 
     block: ($) =>
       seq(
-        $.identifier,
+        field("name", $.identifier),
         "{",
         repeat(choice($.property, $.block, $.comment)),
         "}",
