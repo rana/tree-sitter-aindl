@@ -27,7 +27,7 @@ EMPTY_TESTS {
       (string))
     (property
       (identifier)
-      (multiline_string))))
+      (code))))
 
 ================================================================================
 Number edge cases
@@ -127,7 +127,7 @@ def test():
               (string)))
           (property
             (identifier)
-            (multiline_string)))))
+            (code)))))
     (block
       (identifier)
       (comment)

@@ -67,16 +67,24 @@
       "type": "SEQ",
       "members": [
         {
-          "type": "SYMBOL",
-          "name": "identifier"
+          "type": "FIELD",
+          "name": "key",
+          "content": {
+            "type": "SYMBOL",
+            "name": "identifier"
+          }
         },
         {
           "type": "STRING",
           "value": ":"
         },
         {
-          "type": "SYMBOL",
-          "name": "_value"
+          "type": "FIELD",
+          "name": "value",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_value"
+          }
         }
       ]
     },
@@ -97,7 +105,7 @@
         },
         {
           "type": "SYMBOL",
-          "name": "multiline_string"
+          "name": "code"
         },
         {
           "type": "SYMBOL",
@@ -122,12 +130,15 @@
         }
       ]
     },
-    "multiline_string": {
+    "code": {
       "type": "SEQ",
       "members": [
         {
-          "type": "STRING",
-          "value": "```"
+          "type": "TOKEN",
+          "content": {
+            "type": "STRING",
+            "value": "```"
+          }
         },
         {
           "type": "REPEAT",
@@ -146,8 +157,11 @@
           }
         },
         {
-          "type": "STRING",
-          "value": "```"
+          "type": "TOKEN",
+          "content": {
+            "type": "STRING",
+            "value": "```"
+          }
         }
       ]
     },

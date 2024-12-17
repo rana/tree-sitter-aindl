@@ -17,7 +17,7 @@ hello
     (identifier)
     (property
       (identifier)
-      (multiline_string))))
+      (code))))
 
 
 ================================================================================
@@ -41,7 +41,7 @@ world
       (string))
     (property
       (identifier)
-      (multiline_string))))
+      (code))))
 
 ================================================================================
 Basic multiline strings
@@ -62,7 +62,7 @@ test
     (identifier)
     (property
       (identifier)
-      (multiline_string))))
+      (code))))
 
 ================================================================================
 Mixed complex structure simplified
@@ -106,7 +106,7 @@ rule2
         (identifier)
         (property
           (identifier)
-          (multiline_string))
+          (code))
         (property
           (identifier)
           (boolean))))))
@@ -127,7 +127,7 @@ TEST {
     (identifier)
     (property
       (identifier)
-      (multiline_string))))
+      (code))))
 
 
 ================================================================================
@@ -149,7 +149,7 @@ function test() {
     (identifier)
     (property
       (identifier)
-      (multiline_string))))
+      (code))))
 
 ================================================================================
 Multiline with double backticks
@@ -169,7 +169,7 @@ And more ``stuff``
     (identifier)
     (property
       (identifier)
-      (multiline_string))))
+      (code))))
 
 ================================================================================
 Multiline with mixed backticks
@@ -191,4 +191,4 @@ Code: `const x = "y"`
     (identifier)
     (property
       (identifier)
-      (multiline_string))))
+      (code))))

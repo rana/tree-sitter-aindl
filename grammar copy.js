@@ -20,9 +20,7 @@ module.exports = grammar({
 
     identifier: ($) => /[A-Z][A-Z_0-9]*/,
 
-    // property: ($) => seq($.identifier, ":", $._value),
-    property: ($) =>
-      seq(field("key", $.identifier), ":", field("value", $._value)),
+    property: ($) => seq($.identifier, ":", $._value),
 
     _value: ($) => choice($.boolean, $.number, $.string, $.code, $.array),
 
