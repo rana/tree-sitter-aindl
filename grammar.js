@@ -22,13 +22,11 @@ module.exports = grammar({
 
     property: ($) => seq($.identifier, ":", $._value),
 
-    _value: ($) =>
-      choice($.boolean, $.number, $.string, $.multiline_string, $.array),
+    _value: ($) => choice($.boolean, $.number, $.string, $.code, $.array),
 
     string: ($) => seq('"', /[^"]*/, '"'),
 
-    multiline_string: ($) =>
-      seq("```", repeat(choice(/[^`]+/, /`[^``]|``[^`]/)), "```"),
+    code: ($) => seq("```", repeat(choice(/[^`]+/, /`[^``]|``[^`]/)), "```"),
 
     array: ($) =>
       seq(
