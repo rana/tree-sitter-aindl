@@ -1,0 +1,194 @@
+// tree-sitter-aindl/corpus/multiline.txt
+
+================================================================================
+Minimal multiline string
+================================================================================
+
+TEST {
+  BASIC: ```
+hello
+```
+}
+
+---
+
+(source_file
+  (block
+    (identifier)
+    (property
+      (identifier)
+      (multiline_string))))
+
+
+================================================================================
+Mixed string types
+================================================================================
+
+TEST {
+  REGULAR: "hello"
+  MULTI: ```
+world
+```
+}
+
+---
+
+(source_file
+  (block
+    (identifier)
+    (property
+      (identifier)
+      (string))
+    (property
+      (identifier)
+      (multiline_string))))
+
+================================================================================
+Basic multiline strings
+================================================================================
+
+DOCS {
+  BASIC: ```
+This is a
+multiline string
+test
+```
+}
+
+---
+
+(source_file
+  (block
+    (identifier)
+    (property
+      (identifier)
+      (multiline_string))))
+
+================================================================================
+Mixed complex structure simplified
+================================================================================
+
+SYSTEM {
+  CONFIG {
+    MODE: "advanced"
+    FLAGS: [true false]
+  }
+
+  COMPONENTS {
+    PARSER {
+      RULES: ```
+rule1
+rule2
+```
+      ENABLED: true
+    }
+  }
+}
+
+---
+
+(source_file
+  (block
+    (identifier)
+    (block
+      (identifier)
+      (property
+        (identifier)
+        (string))
+      (property
+        (identifier)
+        (array
+          (boolean)
+          (boolean))))
+    (block
+      (identifier)
+      (block
+        (identifier)
+        (property
+          (identifier)
+          (multiline_string))
+        (property
+          (identifier)
+          (boolean))))))
+
+================================================================================
+Empty multiline string
+================================================================================
+
+TEST {
+  EMPTY: ```
+```
+}
+
+---
+
+(source_file
+  (block
+    (identifier)
+    (property
+      (identifier)
+      (multiline_string))))
+
+
+================================================================================
+Multiline with single backtick
+================================================================================
+
+TEST {
+  CODE: ```
+function test() {
+  return `template literal`;
+}
+```
+}
+
+---
+
+(source_file
+  (block
+    (identifier)
+    (property
+      (identifier)
+      (multiline_string))))
+
+================================================================================
+Multiline with double backticks
+================================================================================
+
+TEST {
+  MARKDOWN: ```
+Here is ``inline code``
+And more ``stuff``
+```
+}
+
+---
+
+(source_file
+  (block
+    (identifier)
+    (property
+      (identifier)
+      (multiline_string))))
+
+================================================================================
+Multiline with mixed backticks
+================================================================================
+
+TEST {
+  MIXED: ```
+Single: `
+Double: ``
+Mixed: `stuff`` more`
+Code: `const x = "y"`
+```
+}
+
+---
+
+(source_file
+  (block
+    (identifier)
+    (property
+      (identifier)
+      (multiline_string))))

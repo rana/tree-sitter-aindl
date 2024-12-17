@@ -1,0 +1,145 @@
+// tree-sitter-aindl/corpus/edge_cases.txt
+
+================================================================================
+Empty blocks and properties
+================================================================================
+
+EMPTY_TESTS {
+  EMPTY_BLOCK { }
+  EMPTY_ARRAY: []
+  EMPTY_STRING: ""
+  EMPTY_MULTILINE: ```
+```
+}
+
+---
+
+(source_file
+  (block
+    (identifier)
+    (block
+      (identifier))
+    (property
+      (identifier)
+      (array))
+    (property
+      (identifier)
+      (string))
+    (property
+      (identifier)
+      (multiline_string))))
+
+================================================================================
+Number edge cases
+================================================================================
+
+NUMBERS {
+  ZERO: 0
+  NEGATIVE_ZERO: -0
+  DECIMALS: [0.0 .5 -.5 0. 42.]
+  SCIENTIFIC: [1e0 1e+0 1e-0 -1E5 -1.2E-3]
+  MAX_REALISTIC: 1e308
+  MIN_REALISTIC: -1e308
+}
+
+---
+
+(source_file
+  (block
+    (identifier)
+    (property
+      (identifier)
+      (number))
+    (property
+      (identifier)
+      (number))
+    (property
+      (identifier)
+      (array
+        (number)
+        (number)
+        (number)
+        (number)
+        (number)))
+    (property
+      (identifier)
+      (array
+        (number)
+        (number)
+        (number)
+        (number)
+        (number)))
+    (property
+      (identifier)
+      (number))
+    (property
+      (identifier)
+      (number))))
+
+================================================================================
+Complex nesting with all types
+================================================================================
+
+ROOT {
+  LEVEL_1A {
+    LEVEL_2A {
+      LEVEL_3 {
+        VALUES: [true false 42 "test"]
+        CODE: ```
+def test():
+    return True
+```
+      }
+    }
+  }
+
+  LEVEL_1B {
+    // Comment in middle of nesting
+    MIXED: [
+      42
+      -1.23e-4
+      true
+      "string"
+    ]
+    DEEP {
+      FLAG: true
+    }
+  }
+}
+
+---
+
+(source_file
+  (block
+    (identifier)
+    (block
+      (identifier)
+      (block
+        (identifier)
+        (block
+          (identifier)
+          (property
+            (identifier)
+            (array
+              (boolean)
+              (boolean)
+              (number)
+              (string)))
+          (property
+            (identifier)
+            (multiline_string)))))
+    (block
+      (identifier)
+      (comment)
+      (property
+        (identifier)
+        (array
+          (number)
+          (number)
+          (boolean)
+          (string)))
+      (block
+        (identifier)
+        (property
+          (identifier)
+          (boolean))))))

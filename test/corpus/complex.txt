@@ -1,0 +1,76 @@
+// tree-sitter-aindl/corpus/complex.txt
+
+================================================================================
+Nested blocks
+================================================================================
+
+OUTER {
+  INNER_A {
+    VALUE: 42
+  }
+  INNER_B {
+    DEEP {
+      FLAG: true
+    }
+    NAME: "test"
+  }
+}
+
+---
+
+(source_file
+  (block
+    (identifier)
+    (block
+      (identifier)
+      (property
+        (identifier)
+        (number)))
+    (block
+      (identifier)
+      (block
+        (identifier)
+        (property
+          (identifier)
+          (boolean)))
+      (property
+        (identifier)
+        (string)))))
+
+================================================================================
+Comments
+================================================================================
+
+// Top level comment
+CONFIG {
+  // Property comment
+  MODE: "test"
+  VALUE: 42 // Inline comment
+  // Comment before block
+  INNER {
+    // Nested comment
+    FLAG: true
+  }
+}
+
+---
+
+(source_file
+  (comment)
+  (block
+    (identifier)
+    (comment)
+    (property
+      (identifier)
+      (string))
+    (property
+      (identifier)
+      (number))
+    (comment)
+    (comment)
+    (block
+      (identifier)
+      (comment)
+      (property
+        (identifier)
+        (boolean)))))

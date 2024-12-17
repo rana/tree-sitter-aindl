@@ -12,6 +12,10 @@
           "named": true
         },
         {
+          "type": "boolean",
+          "named": true
+        },
+        {
           "type": "multiline_string",
           "named": true
         },
@@ -35,6 +39,14 @@
       "required": true,
       "types": [
         {
+          "type": "block",
+          "named": true
+        },
+        {
+          "type": "comment",
+          "named": true
+        },
+        {
           "type": "identifier",
           "named": true
         },
@@ -46,6 +58,16 @@
     }
   },
   {
+    "type": "boolean",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "multiline_string",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "property",
     "named": true,
     "fields": {},
@@ -55,6 +77,10 @@
       "types": [
         {
           "type": "array",
+          "named": true
+        },
+        {
+          "type": "boolean",
           "named": true
         },
         {
@@ -88,12 +114,21 @@
         {
           "type": "block",
           "named": true
+        },
+        {
+          "type": "comment",
+          "named": true
         }
       ]
     }
   },
   {
-    "type": ",",
+    "type": "string",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "\"",
     "named": false
   },
   {
@@ -109,11 +144,19 @@
     "named": false
   },
   {
-    "type": "identifier",
+    "type": "```",
+    "named": false
+  },
+  {
+    "type": "comment",
     "named": true
   },
   {
-    "type": "multiline_string",
+    "type": "false",
+    "named": false
+  },
+  {
+    "type": "identifier",
     "named": true
   },
   {
@@ -121,8 +164,8 @@
     "named": true
   },
   {
-    "type": "string",
-    "named": true
+    "type": "true",
+    "named": false
   },
   {
     "type": "{",

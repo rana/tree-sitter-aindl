@@ -1,17 +1,20 @@
-// grammar.js
+// tree-sitter-aindl/grammar.js
+
 module.exports = grammar({
   name: "aindl",
+
+  extras: ($) => [/\s/, $.comment],
 
   rules: {
     source_file: ($) => repeat($._definition),
 
-    _definition: ($) => choice($.block),
+    _definition: ($) => choice($.block, $.comment),
 
     block: ($) =>
       seq(
         $.identifier,
         "{",
-        optional(seq($.property, repeat(seq(",", $.property)), optional(","))),
+        repeat(choice($.property, $.block, $.comment)),
         "}",
       ),
 
@@ -19,19 +22,64 @@ module.exports = grammar({
 
     property: ($) => seq($.identifier, ":", $._value),
 
-    _value: ($) => choice($.string, $.multiline_string, $.number, $.array),
+    _value: ($) =>
+      choice($.boolean, $.number, $.string, $.multiline_string, $.array),
 
-    string: ($) => /"[^"]*"/,
+    string: ($) => seq('"', /[^"]*/, '"'),
 
-    multiline_string: ($) => token(seq('"""', repeat(/[^"]/), '"""')),
-
-    number: ($) => /\d+(\.\d+)?/,
+    multiline_string: ($) =>
+      seq("```", repeat(choice(/[^`]+/, /`[^``]|``[^`]/)), "```"),
 
     array: ($) =>
       seq(
         "[",
-        optional(seq($._value, repeat(seq(",", $._value)), optional(","))),
+        optional(
+          seq(
+            optional(/\s+/), // Allow leading whitespace
+            $._value,
+            repeat(
+              seq(
+                /\s+/, // Require whitespace between values
+                $._value,
+              ),
+            ),
+            optional(/\s+/), // Allow trailing whitespace
+          ),
+        ),
         "]",
       ),
+
+    boolean: ($) => choice("true", "false"),
+
+    number: ($) => {
+      const digits = /[0-9]+/;
+      const exponent = /[eE][+-]?[0-9]+/;
+
+      return token(
+        seq(
+          optional("-"),
+          choice(
+            // Integer: -42
+            digits,
+
+            // Decimal: -42.123
+            seq(digits, ".", optional(digits)),
+            seq(".", digits),
+
+            // Scientific notation: -42.123e+10, 1.23E-4, 1e5
+            seq(
+              choice(
+                seq(digits, ".", optional(digits)),
+                seq(".", digits),
+                digits,
+              ),
+              exponent,
+            ),
+          ),
+        ),
+      );
+    },
+
+    comment: ($) => token(seq("//", /.*/)),
   },
 });

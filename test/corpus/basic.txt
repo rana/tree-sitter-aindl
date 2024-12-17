@@ -1,10 +1,32 @@
-==================
-Basic AINDL Test
-==================
+// tree-sitter-aindl/corpus/basic.txt
+
+================================================================================
+Empty file
+================================================================================
+
+---
+
+(source_file)
+
+================================================================================
+Simple block
+================================================================================
 
 TEST {
-  SIMPLE: "hello",
-  NUMBER: 42
+}
+
+---
+
+(source_file
+  (block
+    (identifier)))
+
+================================================================================
+Block with single property
+================================================================================
+
+CONFIG {
+  MODE: "test"
 }
 
 ---
@@ -14,20 +36,16 @@ TEST {
     (identifier)
     (property
       (identifier)
-      (string))
-    (property
-      (identifier)
-      (number))))
+      (string))))
 
-==================
-Multiline String Test
-==================
+================================================================================
+Block with multiple properties
+================================================================================
 
-TEST {
-  MULTI: """
-    hello
-    world
-  """
+SETTINGS {
+  ENABLED: true
+  COUNT: 42
+  NAME: "test"
 }
 
 ---
@@ -37,18 +55,22 @@ TEST {
     (identifier)
     (property
       (identifier)
-      (multiline_string))))
+      (boolean))
+    (property
+      (identifier)
+      (number))
+    (property
+      (identifier)
+      (string))))
 
-==================
-Array Test
-==================
+================================================================================
+Simple array values
+================================================================================
 
-TEST {
-  ITEMS: [
-    "one",
-    2,
-    """three"""
-  ]
+CONFIG {
+  SINGLE_NUM: [42]
+  SINGLE_STR: ["test"]
+  SINGLE_BOOL: [true]
 }
 
 ---
@@ -59,6 +81,12 @@ TEST {
     (property
       (identifier)
       (array
-        (string)
-        (number)
-        (multiline_string)))))
+        (number)))
+    (property
+      (identifier)
+      (array
+        (string)))
+    (property
+      (identifier)
+      (array
+        (boolean)))))

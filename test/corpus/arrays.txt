@@ -1,0 +1,114 @@
+// tree-sitter-aindl/corpus/arrays.txt
+
+================================================================================
+Array variations
+================================================================================
+
+ARRAYS {
+  EMPTY: []
+  SINGLE: [42]
+  NUMBERS: [1 2 3 4]
+  STRINGS: ["a" "b" "c"]
+  BOOLEANS: [true false true]
+  MIXED: [true 42 "test" 3.14]
+  SCIENTIFIC: [1e5 1.2e-3 -2.1E+4]
+  DECIMALS: [0.5 -1.234 42.0]
+}
+
+---
+
+(source_file
+  (block
+    (identifier)
+    (property
+      (identifier)
+      (array))
+    (property
+      (identifier)
+      (array
+        (number)))
+    (property
+      (identifier)
+      (array
+        (number)
+        (number)
+        (number)
+        (number)))
+    (property
+      (identifier)
+      (array
+        (string)
+        (string)
+        (string)))
+    (property
+      (identifier)
+      (array
+        (boolean)
+        (boolean)
+        (boolean)))
+    (property
+      (identifier)
+      (array
+        (boolean)
+        (number)
+        (string)
+        (number)))
+    (property
+      (identifier)
+      (array
+        (number)
+        (number)
+        (number)))
+    (property
+      (identifier)
+      (array
+        (number)
+        (number)
+        (number)))))
+
+================================================================================
+Array whitespace handling
+================================================================================
+
+WHITESPACE {
+  SINGLE_LINE_COMPACT: [1 2 3]
+  SINGLE_LINE_SPACED: [1  2  3]
+  TWO_LINES: [1 2
+    3 4]
+  INDENTED: [
+    1
+    2
+    3
+  ]
+}
+
+---
+
+(source_file
+  (block
+    (identifier)
+    (property
+      (identifier)
+      (array
+        (number)
+        (number)
+        (number)))
+    (property
+      (identifier)
+      (array
+        (number)
+        (number)
+        (number)))
+    (property
+      (identifier)
+      (array
+        (number)
+        (number)
+        (number)
+        (number)))
+    (property
+      (identifier)
+      (array
+        (number)
+        (number)
+        (number)))))
